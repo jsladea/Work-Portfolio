@@ -1,4 +1,4 @@
-<strong>NOTE:</strong>
+<h1>NOTE:</h1>
 <br>
 <p>
     In order to prevent reuse, many of the files in this project have been removed.
