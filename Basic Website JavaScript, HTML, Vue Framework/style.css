@@ -1,0 +1,80 @@
+.forecast {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    margin-left: 20px;
+    margin-right: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+
+.neutral {
+    background-color: #E6E6E6;
+}
+
+.unlikely {
+    background-color: #8C5383;
+}
+
+.likely {
+    background-color: #608DA9;
+}
+
+.forecast-img {
+    height: 70px;
+    width: 70px;
+
+    margin-top: 3px;
+    margin-bottom: 5px;
+    background-color: skyblue;
+}
+
+.phase {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-style: solid;
+}
+
+.sdp-img {
+    height: 300px;
+    width: auto;
+    display: inline;
+}
+
+#forecasts-container {
+    background-color: #0D93F0;
+    padding-left: 20px;
+}
+
+#header {
+    background-color: #F09D17;
+    height: 100px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+#content-div {
+    background-color: azure;
+    padding-top: 100px;
+}
+
+#location-div {
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+
+    background-color: #E6E6E6;
+}
+
+#current-weather-div {
+    padding-left: 20px;
+}
+
+#error-message {
+    height: 10000px;
+}
+
+body {
+    background-color: white;
+}

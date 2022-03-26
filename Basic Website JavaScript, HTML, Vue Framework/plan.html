@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>SDP</title>
+
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+
+    <body>
+        <h1>Software Development Plan</h1>
+        <br>
+        <br>
+        <div class="phase">
+            <h2>Phase 0: Requirements Specification</h2>
+            <p><strong>Problem Addressed: </strong>To allow the end-user to view the current weather,
+                as well as a 5 day 3 hour forecast of the weather. 
+               Plus functionality allowing any amateur meteorologist or weather-gambling end-users to mark the likelyhood of forecasts.
+            </p>
+            <br>
+            <h3>Requirements List:</h3>
+
+            <ul>
+                <li>Display the title of the page in a large header.</li>
+                <li>
+                    <p>
+                        Create a <code>&lt;div&gt;</code> to display the user's latitude & longitude, city, state/province and
+                             country as determined by the geolocation API.  Only display what data are available.
+                               Some coordinates may not be  known to lie within a particular city or state/province;
+                                you need only display what information is available.
+                              At minimum you should be able to give the latitude & longitude.
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Current weather data are displayed in a <code>&lt;div&gt;</code> of their own.
+                              Include at minimum the following information obtained from OpenWeatherMap:
+                        <ul>
+                            <li>Human-readable date and time stamp</li>
+                              <li>Daily high temperature in Fahrenheit</li>
+                              <li>Daily low temperature in Fahrenheit</li>
+                              <li>Sky conditions</li>
+                              <li>Humidity percentage</li>
+                              <li>Pressure in units of hPa</li>
+                        </ul>
+                    </p>
+                </li>
+                <li>
+                    <p>
+                        Create a <code>&lt;div&gt;</code> to contain the 5-day/3-hour forecast.   This forecast consists of 40 blocks of weather information,
+                             each of which will be put into its own <code>&lt;div&gt;</code>.  
+                            Each <code>&lt;div&gt;</code> of forecast information displays the same information as the current weather data <code>&lt;div&gt;</code>.
+                    </p>
+                    <ul>
+                        <li>
+                            <p>
+                                Each of the 40 blocks of forecast information is considered to be "likely", "unlikely" or "neutral".
+                                   A forecast starts in the "neutral" state.
+                            </p>
+                        </li>
+                        <li>
+                            Each state is visually distinct from the others; choose a CSS class or background color based upon its likelihood  rating.
+                        </li>
+                        <li>
+                            <p>
+                                Clicking a block of forecast information cycles it among the three states,
+                                 with its appearance changing with its likelihood.  
+                                 Clicking a forecast three times returns it to its original state.
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Above the 40 forecasts display the count of forecasts in each state.
+                                  These counts update in real time as the user clicks on them.  The counts must always sum to 40.
+                            </p>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <br>
+            <br>
+            <h3>Knowns:</h3>
+            <ul>
+                <li>How to make fetch requests and interact with Web-APIs</li>
+                <li>Fundamentals of JavaScript, HTML, CSS, and basics of Vue.js framework</li>
+            </ul>
+
+            <br>
+
+            <h3>Unknowns:</h3>
+            <ul>
+                <li>Specifics of interaction with the Web-APIs needed for this assignment</li>
+                <li>Detailed workings and other features of the Vue.js framework</li>
+            </ul>
+        </div>
+        
+        <div class="phase">
+            <h2>Phase 1: System Analysis</h2>
+            <br>
+            <h3>Inputs:</h3>
+            <ul>
+                <li>UserInput: clicking of forecast divs</li>
+                <li>Data fetched from calls to Web APIs - JSON format</li>
+            </ul>
+
+            <br>
+            <h3>Outputs</h3>
+            <ul>
+                <li>HTML seen by user</li>
+                <h4>More specifically:</h4>
+                <li>Display of location, current weather, and forecasts</li>
+                <li>Count of the forecast likelyhoods(neutral, unlikely, likely)</li>
+            </ul>
+
+            This application will not necessitate the development of any <strong>*notable</strong> algorithms.
+        </div>
+
+        <div class="phase">
+            <h2>Phase 2: Design</h2>
+            <br>
+            <h3>Components of the Vue.js app:</h3>
+            <br>
+            <h3>Data:</h3>
+            
+            <ul>
+                <li><code>error</code> - boolean, determines whether error message is shown.</li>
+                <li><code>fetchingLocation</code> - boolean, determines whether waiting-for-location-data message is shown.</li>
+                <li><code>fetchingWeather</code> - boolean, determines whether waiting-for-weather-data message is shwon.</li>
+                <li><code>location</code> - object containing location properties.
+                    <ul>
+                        <li><code>city</code></li>
+                        <li><code>region</code></li>
+                        <li><code>country</code></li>
+                        <li><code>latitude</code></li>
+                        <li><code>longitude</code></li>
+                    </ul>
+                </li>
+                <li><code>currentConditions</code> - Forecast object containing current weather properties.
+                    <ul>
+                        <li><code>time</code> - the time (in human readable format) that the response was issued from the weather api.</li>
+                        <li><code>temperature</code> - the current temperature.</li>
+                        <li><code>high</code> - the max. temperature for the current day (in Fahrenheit).</li>
+                        <li><code>low</code> - the min. temperature for the current day.</li>
+                        <li><code>sky</code> - a brief description of the current sky conditions.</li>
+                        <li><code>humidity</code> - the current humidity percentage.</li>
+                        <li><code>pressure</code> - the current pressure (in hPa).</li>
+                        <li><code>icon</code> - a link to an image that represents the current sky conditions.</li>
+                    </ul>
+                    <li><code>forecasts</code> - an array of Forecast objects (the 5 day 3 hour forecasts) with the same properties as the currentConditions object.</li>
+                    <li><code>neutralCount</code> - the number of neutral forecasts.</li>
+                    <li><code>likelyCount</code> - the number of likely forecasts.</li>
+                    <li><code>unlikelyCount</code> - the number of unlikely forecasts.</li>
+                </li>
+            </ul>
+            <br>
+            <h3>Methods:</h3>
+
+            <ul>
+                <li>
+                    <code>fetchData()</code>
+                    <ul>
+                        <li>Fetches location and weather data from web APIs.</li>
+                        <li>Called on DOM load.</li>
+                        <li>Calls the fetchLocation() and fetchWeather() methods.</li>
+                        <li>return-type: void</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>fetchLocation()</code>
+                    <ul>
+                        <li>Fetches the location from web API.</li>
+                        <li>return-type: promise</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>fetchWeather()</code>
+                    <ul>
+                        <li>Fetches the current weather and 5 day 3 hour forecast from web API.</li>
+                        <li>sets currentConditions=createForecast(currentWeatherJsonFromWebAPI)</li>
+                        <li>calls fetchForecasts() method.</li>
+                        <li>return-type: promise</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>createForecast(json: JSON containing weather data)</code>
+                    <ul>
+                        <li>Creates a Forecast object from the data in the json parameter.</li>
+                        <li>return-type: Forecast object.</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>fetchForecasts(units: string - units for use as parameter to API call, apikey: string - apikey for use as parameter to API call)</code>
+                    <ul>
+                        <li>Fetches forecast data from web API.</li>
+                        <li>return-type: promise</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>setForecasts(forecasts: Array of JSON forecast data)</code>
+                    <ul>
+                        <li>foreach forecast JSON in forecasts, creates a Forecast object and adds it to the forecast array in the object returned by the <code>data()</code> function.</li>
+                        <li>return-type: void.</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>getCoordinates()</code>
+                    <ul>
+                        <li>Returns a formatted coordinates string of the latitude and longitude.</li>
+                        <li>return-type: string</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>getIconLink(icon: string - icon identifier)</code>
+                    <ul>
+                        <li>Returns a url to the icon resource corresponding to the icon identifier supplied as a parameter.</li>
+                        <li>return-type: string</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>getHumanReadableDate(timestamp: number - unix UTC timestamp)</code>
+                    <ul>
+                        <li>Converts the supplied timestamp into a human readable date/time in the local timezone and returns the formatted time.</li>
+                        <li>return-type: string</li>
+                    </ul>
+                </li>
+                <br>
+                <li>
+                    <code>forecastClicked(event - JavaScript event object)</code>
+                    <ul>
+                        <li><h4>Responds to click events fired by the forecast divs.</h4></li>
+                        <li>classAttribute <code>= event.currentTarget.getAttribute('class')</code> - gets the class attribute of the event's currentTarget</li>
+                        <li><code>if</code> classAttribute <code>== neutral:</code>
+                            <ul>
+                                <li>set class to unlikely</li>
+                            </ul>
+                        </li>
+                        <li><code>else if</code> classAttribute <code>== unlikely:</code>
+                            <ul>
+                                <li>set class to likely</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <code>else:</code>
+                            <ul>
+                                <li>set class to neutral</li>
+                            </ul>
+                        </li>
+        
+                    </ul>
+                </li>
+            </ul>
+            <br>
+            <h3>Computed Properties:</h3>
+
+            <ul>
+                <li>
+                    <code>locationString()</code> - creates a location string to be displayed to the user.
+                    <ul>
+                        <li>
+                            <code>if location</code> has city, region, or country properties<code>:</code>
+                            <ul>
+                                <li>add them to a string: <code>locationStr</code></li>
+                            </ul>
+                        </li>
+                        <li><code>return locationStr + this.getCoordinates()</code></li>
+                    </ul>
+                </li>
+            </ul>
+
+            <img class="sdp-img" src="design-1.jpg" alt="SDP Design Image"/>
+            <br>
+            <img class="sdp-img" src="design-2.jpg" alt="SDP Design Image"/>
+        </div>
+
+        <div class="phase">
+            <h2>Phase 4: Testing and Debugging</h2>
+            <br>
+            <h3>How to test the application</h3>
+            <ol>
+                <li>After application load, verify that all data displays correctly, according to requirements specified in the assignment.</li>
+                <li>Try blocking calls to the web APIS, then refresh the page.  An error message should display, informing the user that an error has occured and that they should try refreshing the page.</li>
+                <li>Click on any of the 5 day 3 hour forecasts.  Verify that the forecast likelyhood counts are displayed correctly, and that the background colors of the forecasts are correct.</li>
+            </ol>
+
+            <h3>Debugging</h3>
+            <ul>
+                <li>Use Vue.js debug build.</li>
+                <li>Check console for error messages while running the application.</li>
+                <li>Test that the outputs of methods are correct.</li>
+            </ul>
+        </div>
+
+        <div class="phase">
+            <h2>Phase 5: Deployment</h2>
+
+            <p>To quote the SDP guidelines: "In this course deployment means turning in your work".</p>
+            <br>
+            <h3>Steps:</h3>
+            <ol>
+                <li>Verify that the final commit was received in gitlab.</li>
+                <li>Validate that the submission is correct and runs properly by cloning the repository and attempting to run the application.</li>
+            </ol>
+        </div>
+
+        <div class="phase">
+            <h2>Phase 6: Maintenance</h2>
+
+            <h3>What maintenance challenges can you forsee?</h3>
+            <p>
+                I don't forsee many maintenance challenges in the near future, due to the simplicity of the application and the ability to quickly encounter any bugs during routine testing.
+                In the long term, the only maintenance challenge I can forsee would be the web APIs changing quickly and not offering backwards compatability, or becoming deprecated entirely.
+            </p>
+
+            <br>
+            <h3>What parts of your program are sloppily written or hard to understand?</h3>
+            <p>
+                I feel like the methods for fetching data could be organized a bit cleaner, but I don't think they are hard to understand.
+            </p>
+
+            <br>
+            <h3>Will your documentation make sense to anybody besides yourself?</h3>
+            <p>
+                I think anyone who reads my documentation from Phase 2 and looks at the code, should understand pretty quickly what is going on.
+            </p>
+
+            <br>
+            <h3>Will your documentation make sense to you in 6 months?</h3>
+            <p>I believe so.</p>
+
+            <br>
+            <h3>How easy will it be to add a new feature to this program in a year?</h3>
+            <p>I think it should be relatively easy.</p>
+
+            <br>
+            <h3>Will your program continue to work after upgrading your computer's hardware?</h3>
+            <p>Yes</p>
+
+            <br>
+            <h3>Will your program continue to work after upgrading the operating system?</h3>
+            <p>Yes</p>
+        </div>
+
+    </body>
+
+</html>

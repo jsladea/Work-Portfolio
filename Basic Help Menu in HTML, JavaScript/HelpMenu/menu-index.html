@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>User Manual</title>
+        <link rel="stylesheet" type="text/css" href="style.css"/>
+
+        <script src="vue.js"></script>
+    </head>
+
+    <body>
+        <div id="app-root">
+            <h1 class="page-header">Help Menu</h1>
+
+            <h2 id="main-description">Select a topic from the grid below:</h2>
+
+            <div id="main-grid-container">
+                <div :class="{'grid-item': !gridItem.isHeader, 'grid-header': gridItem.isHeader}" @click="navigate(gridItem.link)" v-for="gridItem in mainGridItems">
+                    {{gridItem.text}}
+                    <br v-if="!gridItem.isHeader">
+                    <img v-if="!gridItem.isHeader" :src="gridItem.imgSrc">
+                </div>
+                
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Weather App</title>
+        
+
+        <link rel="stylesheet" href="style.css"/>
+        <script src="https://unpkg.com/vue@next"></script>
+    </head>
+    <body>
+        <div id="app-root">
+            <div id="header">
+                <h1 id="header-text">Vue.JS Weather App</h1>
+            </div>
+            <a href="plan.html">View Software Development Plan</a>
+            <div id="content-div">
+                <h2 id="error-message" v-if="error">An error occurred. Try refreshing the page.</h2>
+
+                <div v-if="!error" id="location-div">
+                    <h2>Your Location</h2>
+                    <p v-if="fetchingLocation">Fetching location data. Please wait.</p>
+                    <p v-if="!fetchingLocation">{{ locationString }}</p>
+                </div>
+                <div v-if="!error" id="current-weather-div">
+                    <h2>Current Weather Conditions</h2>
+                    <p v-if="fetchingWeather">Fetching weather data. Please wait.</p>
+                    <p v-if="!fetchingWeather">Current Conditions at {{currentConditions.time}}</p>
+
+                    <img class="forecast-img" v-if="!fetchingWeather" :src="currentConditions.icon" alt="Weather Image"/>
+
+                    <ul v-if="!fetchingWeather">
+                        <li>Current Temperature: {{currentConditions.temperature}}F</li>
+                        <li>High: {{currentConditions.high}}F</li>
+                        <li>Low: {{currentConditions.low}}F</li>
+                        <li>Sky Conditions: {{currentConditions.sky}}</li>
+                        <li>Humidity: {{currentConditions.humidity}}%</li>
+                        <li>Pressure: {{currentConditions.pressure}} hPa</li>
+                    </ul>
+                
+                </div>
+
+                <div id="forecasts-container">
+                    <h2>5 Day 3-Hour Forecast</h2>
+                    <p v-if="fetchingWeather">Fetching weather data. Please wait.</p>
+
+                    <h3 v-if="!fetchingWeather"><span class="neutral">{{neutralCount}} neutral</span>,
+                         <span class="unlikely">{{unlikelyCount}} unlikely</span>,
+                         <span class="likely">{{likelyCount}} likely</span>
+                    </h3>
+
+                    <div class="forecast neutral" @click="forecastClicked" v-if="!fetchingWeather" v-for="forecast in forecasts">
+                        <h3>Conditions for {{forecast.time}}</h3>
+
+                        <img class="forecast-img" :src="forecast.icon" alt="Weather Image"/>
+
+                        <ul>
+                            <li>OpenWeather Temperature: {{forecast.temperature}}F</li>
+                            <li>High: {{forecast.high}}F</li>
+                            <li>Low: {{forecast.low}}F</li>
+                            <li>Sky Conditions: {{forecast.sky}}</li>
+                            <li>Humidity: {{forecast.humidity}}%</li>
+                            <li>Pressure: {{forecast.pressure}} hPa</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src=script.js></script>
+    </body>
+</html>
