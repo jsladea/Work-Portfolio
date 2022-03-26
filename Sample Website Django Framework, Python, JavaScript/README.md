@@ -6,4 +6,4 @@
 
 <br>
 
-<img src="https://slade-international.com/images/portfolio-images/python-django.png">
+<img style="width: 200px; height:auto;" src="https://slade-international.com/images/portfolio-images/python-django.png">
