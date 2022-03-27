@@ -1,7 +1,7 @@
 <h1>Example Website Rating System</h1>
 <br>
 <p>
-    This is a sample of work that I did on a project in college.
+    This is a sample of work that I did on a project.
     <br>
     The webserver was written in python using the Django framework.
     <br>
