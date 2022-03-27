@@ -1,7 +1,7 @@
 <h1>Example Help Menu/User Manual</h1>
 <br>
 <p>
-    This is a website I put together that fetches location and weather data from web APIs.
+    This is a Help Menu that I created for an application that I developed.
     <br>
     It makes use of the Vue.js framework.
 </p>

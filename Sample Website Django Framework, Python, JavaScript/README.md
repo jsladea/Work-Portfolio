@@ -2,6 +2,10 @@
 <br>
 <p>
     This is a sample of work that I did on a project in college.
+    <br>
+    The webserver was written in python using the Django framework.
+    <br>
+    The project also makes use of HTML, CSS, and JavaScript.
 </p>
 
 <br>
